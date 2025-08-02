@@ -1,5 +1,5 @@
 Algoritmo SuperficieCuadrado
 	Leer lado
-	superficie=lado*lado
-	Mostrar superficie	
+	superficie <- lado*lado
+	Escribir superficie
 FinAlgoritmo
