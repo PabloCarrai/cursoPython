@@ -7,9 +7,9 @@ Algoritmo Ejercicio10
 	Leer numero1
 	Si numero>numero1 Entonces
 		Escribir 'El primer numero es mayor al segundo'
-		Mostrar numero
+		Escribir numero
 	SiNo
 		Escribir 'El segundo numero es mayor al primero'
-		Mostrar numero1
+		Escribir numero1
 	FinSi
 FinAlgoritmo
