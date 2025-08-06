@@ -8,7 +8,6 @@ numero1 = int(input("Ingrese Segundo Numero "))
 numero2 = int(input("Ingrese Tercer Numero "))
 maximo = 0
 minimo = 0
-
 if ((numero > numero1) and (numero > numero2)):
     maximo = numero
 else:
@@ -17,8 +16,6 @@ else:
     else:
         if ((numero2 > numero) and (numero2 > numero1)):
             maximo = numero2
-
-
 if ((numero < numero1) and (numero < numero2)):
     minimo = numero
 else:
@@ -27,7 +24,6 @@ else:
     else:
         if ((numero2 < numero) and (numero2 < numero1)):
             minimo = numero2
-
 print("Maximo")
 print(maximo)
 print("Minimo")
