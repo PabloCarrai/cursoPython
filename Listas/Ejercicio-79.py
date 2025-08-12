@@ -27,6 +27,9 @@ if (seRepite > 1):
     print("Se repite ")
     print(seRepite)
     print("Veces")
+
+print("Lista completa ")
+print(lista)
 #   Imprimo el mayor
 print("Mayor ")
 print(mayor)
