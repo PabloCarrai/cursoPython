@@ -15,4 +15,20 @@ def presentacion():
     print("-------------------------------------------------------")
 
 
+def cargaSuma():
+    valor = int(input("Valor?   "))
+    valor1 = int(input("Valor?  "))
+    print("La suma de ambos valores es ")
+    print(valor+valor1)
+
+
+def finalizacion():
+    print("-------------------------------------------------------")
+    print("Gracias por usar la aplicacion")
+    print("-------------------------------------------------------")
+
+
+#   Llamado a las funciones
 presentacion()
+cargaSuma()
+finalizacion()
