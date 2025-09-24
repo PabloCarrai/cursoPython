@@ -19,38 +19,70 @@ class Aplicacion:
 
         self.ventana = tk.Tk()
         self.ventana.title("Ejercicio-251.py")
-        self.ventana.geometry("450x500")
+        self.ventana.geometry("500x650")
 
         self.scrolledtext = sc.ScrolledText(self.ventana, width=50, height=10)
-        self.scrolledtext.grid(column=0, row=0)
+        self.scrolledtext.grid(column=0, row=0, sticky="e")
 
         self.labelframe = tk.LabelFrame(self.ventana, text="Region")
-        self.labelframe.grid(column=0, row=5)
+        self.labelframe.grid(column=0, row=5, padx=10, pady=10, sticky="e")
 
         self.etiquetaDesde = ttk.Label(self.labelframe, text="Desde Fila:")
-        self.etiquetaDesde.grid(column=0, row=6)
+        self.etiquetaDesde.grid(column=0, row=6, padx=10, pady=10, sticky="e")
 
-        self.datoentradaDesde = tk.StringVar()
-        self.entradaDesde = ttk.Entry(self.labelframe,textvariable=self.datoentradaDesde)
-        self.entradaDesde.grid(column=1, row=6)
+        self.datoentradaDesdefila = tk.StringVar()
+        self.entradaDesde = ttk.Entry(
+            self.labelframe, textvariable=self.datoentradaDesdefila)
+        self.entradaDesde.grid(column=1, row=6, padx=10, pady=10, sticky="e")
 
         self.etiquetadesdeColumna = ttk.Label(
             self.labelframe, text="Desde Columna:")
-        self.etiquetadesdeColumna.grid(column=0, row=7)
+        self.etiquetadesdeColumna.grid(
+            column=0, row=7, padx=10, pady=10, sticky="e")
 
         self.datoentradaDesdeColumna = tk.StringVar()
-        self.entradaDesdeColumna = ttk.Entry(self.labelframe,textvariable=self.datoentradaDesdeColumna)
-        self.entradaDesdeColumna.grid(column=1, row=7)
+        self.entradaDesdeColumna = ttk.Entry(
+            self.labelframe, textvariable=self.datoentradaDesdeColumna)
+        self.entradaDesdeColumna.grid(
+            column=1, row=7, padx=10, pady=10, sticky="e")
 
         self.etiquedahasta = ttk.Label(
             self.labelframe, text="Hasta Fila:")
-        self.etiquedahasta.grid(column=0, row=8)
+        self.etiquedahasta.grid(column=0, row=8, padx=10, pady=10, sticky="e")
 
-        self.datoentradaHasta = tk.StringVar()
-        self.entradaHasta = ttk.Entry(self.labelframe,textvariable=self.datoentradaHasta)
-        self.entradaHasta.grid(column=1, row=8)
+        self.datoentradaHastafila = tk.StringVar()
+        self.entradaHasta = ttk.Entry(
+            self.labelframe, textvariable=self.datoentradaHastafila)
+        self.entradaHasta.grid(column=1, row=8, padx=10, pady=10, sticky="e")
+
+        self.etiquetahastacolumna = ttk.Label(
+            self.labelframe, text="Hasta Columna")
+        self.etiquetahastacolumna.grid(
+            column=0, row=9, padx=10, pady=10, sticky="e")
+
+        self.datoentradahastacolumna = tk.StringVar()
+        self.entradahastacolumna = ttk.Entry(
+            self.labelframe, textvariable=self.datoentradahastacolumna)
+        self.entradahastacolumna.grid(
+            column=1, row=9, padx=10, pady=10, sticky="e")
+
+        self.botonCopiar = ttk.Button(
+            self.labelframe, text="Copiar", command=self.copiar)
+        self.botonCopiar.grid(column=1, row=10, padx=10, pady=10, sticky="e")
+
+        self.scrolledtext2 = sc.ScrolledText(self.ventana, width=50, height=10)
+        self.scrolledtext2.grid(column=0, row=12, sticky="e")
 
         self.ventana.mainloop()
+
+    def copiar(self):
+        ifila = self.datoentradaDesdefila.get()
+        ffila = self.datoentradaHastafila.get()
+        icolumna = self.datoentradaDesdeColumna.get()
+        fcolumna = self.datoentradahastacolumna.get()
+        datos = self.scrolledtext.get(ifila+"."+icolumna, ffila+"."+fcolumna)
+        self.scrolledtext2.delete("1.0", tk.END)
+        self.scrolledtext2.insert("1.0", datos)
 
 
 aplicacion = Aplicacion()
