@@ -22,7 +22,7 @@ class Aplicacion:
         self.ventana.geometry("500x650")
 
         self.scrolledtext = sc.ScrolledText(self.ventana, width=50, height=10)
-        self.scrolledtext.grid(column=0, row=0, sticky="e")
+        self.scrolledtext.grid(column=0, row=0, padx=10, pady=10, sticky="e")
 
         self.labelframe = tk.LabelFrame(self.ventana, text="Region")
         self.labelframe.grid(column=0, row=5, padx=10, pady=10, sticky="e")
@@ -71,7 +71,7 @@ class Aplicacion:
         self.botonCopiar.grid(column=1, row=10, padx=10, pady=10, sticky="e")
 
         self.scrolledtext2 = sc.ScrolledText(self.ventana, width=50, height=10)
-        self.scrolledtext2.grid(column=0, row=12, sticky="e")
+        self.scrolledtext2.grid(column=0, row=12, padx=10, pady=10, sticky="e")
 
         self.ventana.mainloop()
 
