@@ -23,7 +23,7 @@ class Aplicacion:
         self.boton.grid(column=0, row=0)
 
         self.canvas1 = tk.Canvas(
-            self.ventana, width=700, height=400, background="black")
+            self.ventana, width=200, height=400, background="black")
         self.canvas1.grid(column=0, row=1, padx=10, pady=10)
 
         #   Hay que usar gif, y tambien ruta absoluta
@@ -36,7 +36,7 @@ class Aplicacion:
         self.archivo2 = tk.PhotoImage(
             file="/home/ed/cursoPython/TkInter/3.gif")
 
-        self.canvas1.create_image(500, 100, image=self.archivo0, anchor="nw")
+        self.canvas1.create_image(10, 100, image=self.archivo0, anchor="nw")
 
         self.ventana.mainloop()
 
@@ -48,15 +48,13 @@ class Aplicacion:
         aleatorio = rd(0, 2)
         if aleatorio == 0:
             self.canvas1.create_image(
-                500, 100, image=self.archivo0, anchor="nw")
-        else:
-            if aleatorio == 1:
-                self.canvas1.create_image(
-                    500, 100, image=self.archivo1, anchor="nw")
-            else:
-                if aleatorio == 2:
-                    self.canvas1.create_image(
-                        500, 100, image=self.archivo2, anchor="nw")
+                20, 100, image=self.archivo0, anchor="nw")
+        elif aleatorio == 1:
+            self.canvas1.create_image(
+                20, 100, image=self.archivo1, anchor="nw")
+        elif aleatorio == 2:
+            self.canvas1.create_image(
+                20, 100, image=self.archivo2, anchor="nw")
 
 
 aplicacion = Aplicacion()
