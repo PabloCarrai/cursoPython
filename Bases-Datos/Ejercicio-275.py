@@ -10,7 +10,7 @@ conexion = mysql.connector.connect(
 cursor = conexion.cursor()
 cursor.execute("show tables")
 for tabla in cursor:
-    print(tabla)
+    print(tabla[0])
 
 
 conexion.close()
