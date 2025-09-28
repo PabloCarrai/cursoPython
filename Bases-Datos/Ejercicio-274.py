@@ -1,9 +1,8 @@
-import mariadb
+import mysql.connector
 
-conexion = mysql.connector.connect(
-    host="192.168.0.222", user="root", passwd="Somosdecarne", port=3306)
+conexion = mysql.connector.connect(user="root", passwd="SomosDeCarn3",host="192.168.0.222",port=3307)
 cursor = conexion.cursor()
 cursor.execute("show databases")
 for base in cursor:
-    print(base)
+    print(base[0])
 conexion.close()
