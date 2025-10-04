@@ -1,14 +1,15 @@
 import mysql.connector
+from decouple import config
 
 
 class Articulos:
     def abrir(self):
         conexion = mysql.connector.connect(
-            user="root",
-            passwd="SomosDeCarn3",
-            host="192.168.0.222",
-            port=3307,
-            database="db1",
+            user=config("MYSQL_USER"),
+            passwd=config("MYSQL_PASSWORD"),
+            host=config("MYSQL_HOST"),
+            port=config("MYSQL_PORT"),
+            database=config("MYSQL_DATABASE"),
         )
         return conexion
 
@@ -25,29 +26,30 @@ class Articulos:
         cursor = cone.cursor()
         sql = "select descripcion, precio from articulos where codigo=%s"
         cursor.execute(sql, datos)
-        cone.close()
         return cursor.fetchall()
+        #   Es raro, pero tengo que cerrar la conexion luego del return
+        cone.close()
 
     def recuperar_todos(self):
         cone = self.abrir()
         cursor = cone.cursor()
         sql = "select codigo, descripcion, precio from articulos"
         cursor.execute(sql)
-        cone.close()
         return cursor.fetchall()
+        cone.close()
 
     def borrado_articulo(self, datos):
         cone = self.abrir()
         cursor = cone.cursor()
-        sql = "select codigo, descripcion, precio from articulos"
-        cursor.execute(sql)
+        sql = "delete from articulos where codigo=%s"
+        cursor.execute(sql, datos)
+        cone.commit()
         cone.close()
-        pass
 
     def modificar_articulo(self, dato):
         cone = self.abrir()
         cursor = cone.cursor()
-        sql = "select codigo, descripcion, precio from articulos"
-        cursor.execute(sql)
+        sql = "update articulos set descripcion=%s, precio=%s where codigo=%s"
+        cursor.execute(sql, dato)
+        cone.commit()
         cone.close()
-        pass

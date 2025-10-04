@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import scrolledtext as sc
 from tkinter import messagebox as ms
 import conexion
+import mysql.connector
 
 
 class Aplicacion:
@@ -123,7 +124,9 @@ class Aplicacion:
         self.labelframeListadoCompleto.grid(column=0, row=0, padx=10, pady=10)
 
         self.botonListadoCompleto = Button(
-            self.labelframeListadoCompleto, text="Listado Completo"
+            self.labelframeListadoCompleto,
+            text="Listado Completo",
+            command=self.listadoCompleto,
         )
         self.botonListadoCompleto.grid(column=0, row=0, padx=10, pady=10)
 
@@ -153,7 +156,7 @@ class Aplicacion:
         )
         self.entradaBorradoArticuloCodigo.grid(column=1, row=0, padx=10, pady=10)
         self.botonBorradoArticuloBorrado = Button(
-            self.labelframeBorradoArticulo, text="Borrar"
+            self.labelframeBorradoArticulo, text="Borrar", command=self.borrarArticulo
         )
         self.botonBorradoArticuloBorrado.grid(column=1, row=1, padx=10, pady=10)
 
@@ -189,6 +192,7 @@ class Aplicacion:
             textvariable=self.datoEntradaModificarArticuloDescripcion,
         )
         self.entradaModificarArticuloDescripcion.grid(column=1, row=1, padx=10, pady=10)
+        self.entradaModificarArticuloDescripcion.config(state="disabled")
 
         self.etiquetaModificarArticuloPrecio = Label(
             self.labelframeModificarArticulo, text="Precio"
@@ -200,16 +204,22 @@ class Aplicacion:
             self.labelframeModificarArticulo,
             textvariable=self.datoEntradaModificarArticuloPrecio,
         )
+        self.entradaModificarArticuloPrecio.config(state="disabled")
         self.entradaModificarArticuloPrecio.grid(column=1, row=2, padx=10, pady=10)
 
         self.botonModificarArticuloConsultar = Button(
-            self.labelframeModificarArticulo, text="Consultar"
+            self.labelframeModificarArticulo,
+            text="Consultar",
+            command=self.consultaPorCodigo2,
         )
         self.botonModificarArticuloConsultar.grid(column=1, row=3, padx=10, pady=10)
         self.botonModificarArticuloModificar = Button(
-            self.labelframeModificarArticulo, text="Modificar"
+            self.labelframeModificarArticulo,
+            text="Modificar",
+            command=self.modificarRegistro,
         )
         self.botonModificarArticuloModificar.grid(column=1, row=4, padx=10, pady=10)
+        self.botonModificarArticuloModificar.config(state="disabled")
 
         #   La agrego al notebook
         self.notebook.add(self.seccion5, text="Modificar Articulo")
@@ -221,16 +231,80 @@ class Aplicacion:
             self.datoEntradaCargaArticulosDescripcion.get(),
             self.datoEntradaCargaArticuloPrecio.get(),
         )
-        self.articulo1.alta(datos)
-        ms.showinfo("Informacion", "Datos cargados")
-        self.datoEntradaCargaArticulosDescripcion.set("")
-        self.datoEntradaCargaArticuloPrecio.set("")
+        #   Chequeo que haya algo cargado en las entradas de datos
+        if (
+            len(self.datoEntradaCargaArticulosDescripcion.get()) == 0
+            or len(self.datoEntradaCargaArticuloPrecio.get()) == 0
+        ):
+            ms.showerror("Cuidado", "No se han cargado datos")
+        else:
+            self.articulo1.alta(datos)
+            ms.showinfo("Informacion", "Datos cargados")
+            self.datoEntradaCargaArticulosDescripcion.set("")
+            self.datoEntradaCargaArticuloPrecio.set("")
 
     def consultarPorCodigo(self):
         self.entradaConsultaCodigoDescripcion.config(state="normal")
         self.entradaConsultaCodigoPrecio.config(state="normal")
-        print(self.datoentradaConsultaCodigoCodigo.get())
+        self.entradaConsultaCodigoDescripcion.delete(0, END)
+        self.entradaConsultaCodigoPrecio.delete(0, END)
+        datos = (self.datoentradaConsultaCodigoCodigo.get(),)
+        if len(self.datoentradaConsultaCodigoCodigo.get()) == 0:
+            ms.showerror("Cuidado", "No ha insertado el codigo a buscar")
+        else:
+            resultado = self.articulo1.consulta(datos)
+            if len(resultado) > 0:
+                self.entradaConsultaCodigoDescripcion.insert("0", resultado[0][0])
+                self.entradaConsultaCodigoPrecio.insert("0", resultado[0][1])
+            else:
+                self.entradaConsultaCodigoDescripcion.insert("0", "")
+                self.entradaConsultaCodigoPrecio.insert("0", "")
+                ms.showinfo("Informacion", "No existe articulo con dicho codigo")
 
+    def listadoCompleto(self):
+        self.areaTexto.delete("1.0", END)
+        resultado = self.articulo1.recuperar_todos()
+        for fila in resultado:
+            self.areaTexto.insert(
+                END, f"Codigo: {fila[0]}\n Descripcion: {fila[1]}\n Precio: {fila[2]}\n"
+            )
+
+    def borrarArticulo(self):
+        datos = (self.datoentradaBorradoArticuloCodigo.get(),)
+        resultado = self.articulo1.borrado_articulo(datos)
+        ms.showinfo("Informacion", "Registro borrado")
+        self.datoentradaBorradoArticuloCodigo.set("")
+
+    def consultaPorCodigo2(self):
+        self.entradaModificarArticuloDescripcion.config(state="normal")
+        self.entradaModificarArticuloDescripcion.delete(0, END)
+        self.entradaModificarArticuloPrecio.config(state="normal")
+        self.entradaModificarArticuloPrecio.delete(0, END)
+        self.entradaModificarArticuloCodigo.config(state="readonly")
+        datos = (self.datoEntradaModificarArticuloCodigo.get(),)
+        self.botonModificarArticuloModificar.config(state="normal")
+        if len(self.datoEntradaModificarArticuloCodigo.get()) == 0:
+            ms.showerror("Cuidado", "No ha insertado el codigo a buscar")
+        else:
+            resultado = self.articulo1.consulta(datos)
+            if len(resultado) > 0:
+                self.entradaModificarArticuloDescripcion.insert("0", resultado[0][0])
+                self.entradaModificarArticuloPrecio.insert("0", resultado[0][1])
+            else:
+                self.entradaModificarArticuloDescripcion.insert("0", "")
+                self.entradaModificarArticuloPrecio.insert("0", "")
+                ms.showinfo("Informacion", "No existe articulo con dicho codigo")
+
+    def modificarRegistro(self):
+        datos = (
+            self.entradaModificarArticuloDescripcion.get(),
+            self.entradaModificarArticuloPrecio.get(),
+            self.entradaModificarArticuloCodigo.get(),
+        )
+        print(datos)
+        self.articulo1.modificar_articulo(datos)
+        ms.showinfo("Hecho", "Registro Modificado")
+        self.entradaModificarArticuloCodigo.config(state="normal")
 
 
 aplicacion = Aplicacion()
