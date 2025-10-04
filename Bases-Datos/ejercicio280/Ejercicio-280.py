@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import scrolledtext as sc
 from tkinter import messagebox as ms
 import conexion
-import mysql.connector
 
 
 class Aplicacion:
