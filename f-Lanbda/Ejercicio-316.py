@@ -12,7 +12,6 @@ imprimir_si(lista, lambda x: x % 2 == 0)
 print("Multiplos de 3 y 5")
 imprimir_si(lista, lambda x: x % 3 == 0 or x % 5 == 0)
 
-
 print("Mayores iguales a 50")
 imprimir_si(lista, lambda x: x >= 50)
 
