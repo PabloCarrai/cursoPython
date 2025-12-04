@@ -6,4 +6,4 @@ while True:
     op = input("Desea ingresar otro valor? [si/no]")
     if op in opciones_salir:
         break
-print(f"La suma d elos valores es {suma}")
+print(f"La suma de los valores es {suma}")
