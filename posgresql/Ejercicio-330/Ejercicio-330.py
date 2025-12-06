@@ -300,7 +300,6 @@ class Aplicacion:
             self.entradaModificarArticuloPrecio.get(),
             self.entradaModificarArticuloCodigo.get(),
         )
-        print(datos)
         self.articulo1.modificar_articulo(datos)
         ms.showinfo("Hecho", "Registro Modificado")
         self.entradaModificarArticuloCodigo.config(state="normal")

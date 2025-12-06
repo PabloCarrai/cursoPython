@@ -47,7 +47,7 @@ class Articulos:
         try:
             cone = self.abrir()
             cursor = cone.cursor()
-            sql = "delete from articulos where codigo=?"
+            sql = "delete from articulos where codigo=%s"
             cursor.execute(sql, datos)
             cone.commit()
         finally:
@@ -57,7 +57,7 @@ class Articulos:
         try:
             cone = self.abrir()
             cursor = cone.cursor()
-            sql = "update articulos set descripcion=?, precio=? where codigo=?"
+            sql = "update articulos set descripcion=%s, precio=%s where codigo=%s"
             cursor.execute(sql, dato)
             cone.commit()
         finally:
